@@ -1,0 +1,30 @@
+[package]
+name = "tvstudio-gui"
+version = "0.1.0"
+edition = "2021"
+description = "TV Studio в графическом окне — среда визуальной разработки приложений на tvision-rs / tvision-gui"
+license = "MIT"
+
+# Логика среды (дизайнер, редактор, LSP, генератор кода) пишется на
+# tvision-rs, окно ОС даёт tvision-gui. Обе библиотеки лежат рядом:
+#
+#   …/tvision-rs     https://github.com/cat386/tvision-rs
+#   …/tvision-gui    https://github.com/cat386/tvision-gui
+#   …/tvstudio-gui   этот репозиторий
+[dependencies]
+tvision-rs = { path = "../tvision-rs" }
+tvision-gui = { path = "../tvision-gui", optional = true }
+
+[features]
+# По умолчанию — среда в графическом окне. `--no-default-features` —
+# та же среда в терминале (так же гоняются тесты на «невидимом» экране).
+default = ["gui"]
+gui = ["dep:tvision-gui"]
+
+[lib]
+name = "tvstudio"
+path = "src/lib.rs"
+
+[[bin]]
+name = "tvstudio-gui"
+path = "src/main.rs"
